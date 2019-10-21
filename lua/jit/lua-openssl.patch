@@ -1,0 +1,42 @@
+diff -uNr lua-openssl.orig/Makefile lua-openssl/Makefile
+--- lua-openssl.orig/Makefile	2019-08-01 12:12:14.312051152 +0900
++++ lua-openssl/Makefile	2019-08-01 12:42:51.445661253 +0900
+@@ -15,33 +15,11 @@
+ endif
+ 
+ #Lua auto detect
+-LUA_VERSION	:= $(shell $(PKG_CONFIG) luajit --print-provides)
+-ifeq ($(LUA_VERSION),)
+-  # Not found luajit package, try lua
+-  LUA_VERSION	:= $(shell $(PKG_CONFIG) lua --print-provides)
+-  ifeq ($(LUA_VERSION),)
+-    # Not found lua package, try from prefix
+-    LUA_VERSION := $(shell lua -e "_,_,v=string.find(_VERSION,'Lua (.+)');print(v)")
+-    LUA_CFLAGS	?= -I$(PREFIX)/include
+-    LUA_LIBS	?= -L$(PREFIX)/lib #-llua
+-    LUA_LIBDIR	?= $(PREFIX)/lib/lua/$(LUA_VERSION)
+-    LUA		:= lua
+-  else
+-    # Found lua package
+-    LUA_VERSION	:= $(shell lua -e "_,_,v=string.find(_VERSION,'Lua (.+)');print(v)")
+-    LUA_CFLAGS	?= $(shell $(PKG_CONFIG) lua --cflags)
+-    LUA_LIBS	?= $(shell $(PKG_CONFIG) lua --libs)
+-    LUA_LIBDIR	?= $(PREFIX)/lib/lua/$(LUA_VERSION)
+-    LUA		:= lua
+-  endif
+-else
+-  # Found luajit package
+-  LUA_VERSION	:= $(shell luajit -e "_,_,v=string.find(_VERSION,'Lua (.+)');print(v)")
+-  LUA_CFLAGS	?= $(shell $(PKG_CONFIG) luajit --cflags)
+-  LUA_LIBS	?= $(shell $(PKG_CONFIG) luajit --libs)
+-  LUA_LIBDIR	?= $(PREFIX)/lib/lua/$(LUA_VERSION)
+-  LUA		:= luajit
+-endif
++LUA_VERSION	:= 5.1
++LUA_CFLAGS	?= -I../include
++LUA_LIBS	?= -L../lib #-llua
++LUA_LIBDIR	?= ../lib/luajit
++LUA		:= luajit
+ 
+ #OpenSSL auto detect
+ OPENSSL_CFLAGS	?= $(shell $(PKG_CONFIG) openssl --cflags)

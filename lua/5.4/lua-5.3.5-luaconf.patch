@@ -1,0 +1,29 @@
+--- lua-5.3.5/src/luaconf.h.orig	2019-06-07 08:44:24.272843399 +0900
++++ lua-5.3.5/src/luaconf.h	2019-06-07 08:45:51.338874594 +0900
+@@ -52,26 +52,6 @@
+ #endif
+ 
+ 
+-#if defined(LUA_USE_WINDOWS)
+-#define LUA_DL_DLL	/* enable support for DLL */
+-#define LUA_USE_C89	/* broadly, Windows is C89 */
+-#endif
+-
+-
+-#if defined(LUA_USE_LINUX)
+-#define LUA_USE_POSIX
+-#define LUA_USE_DLOPEN		/* needs an extra library: -ldl */
+-#define LUA_USE_READLINE	/* needs some extra libraries */
+-#endif
+-
+-
+-#if defined(LUA_USE_MACOSX)
+-#define LUA_USE_POSIX
+-#define LUA_USE_DLOPEN		/* MacOS does not need -ldl */
+-#define LUA_USE_READLINE	/* needs an extra library: -lreadline */
+-#endif
+-
+-
+ /*
+ @@ LUA_C89_NUMBERS ensures that Lua uses the largest types available for
+ ** C89 ('long' and 'double'); Windows always has '__int64', so it does

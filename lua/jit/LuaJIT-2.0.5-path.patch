@@ -1,0 +1,62 @@
+diff -uNr LuaJIT-2.0.5.orig/src/luaconf.h LuaJIT-2.0.5/src/luaconf.h
+--- LuaJIT-2.0.5.orig/src/luaconf.h	2019-07-06 20:41:13.277767008 +0900
++++ LuaJIT-2.0.5/src/luaconf.h	2019-07-06 20:46:48.805468995 +0900
+@@ -35,14 +35,14 @@
+ #ifndef LUA_LMULTILIB
+ #define LUA_LMULTILIB	"lib"
+ #endif
+-#define LUA_LROOT	"/usr/local"
+-#define LUA_LUADIR	"/lua/5.1/"
+-#define LUA_LJDIR	"/luajit-2.0.5/"
++#define LUA_LROOT	""
++#define LUA_LUADIR	"lua/"
++#define LUA_LJDIR	"luajit/"
+ 
+ #ifdef LUA_ROOT
+ #define LUA_JROOT	LUA_ROOT
+-#define LUA_RLDIR	LUA_ROOT "/share" LUA_LUADIR
+-#define LUA_RCDIR	LUA_ROOT "/" LUA_MULTILIB LUA_LUADIR
++#define LUA_RLDIR	LUA_ROOT LUA_LUADIR
++#define LUA_RCDIR	LUA_ROOT LUA_MULTILIB "/" LUA_LUADIR
+ #define LUA_RLPATH	";" LUA_RLDIR "?.lua;" LUA_RLDIR "?/init.lua"
+ #define LUA_RCPATH	";" LUA_RCDIR "?.so"
+ #else
+@@ -51,9 +51,9 @@
+ #define LUA_RCPATH
+ #endif
+ 
+-#define LUA_JPATH	";" LUA_JROOT "/share" LUA_LJDIR "?.lua"
+-#define LUA_LLDIR	LUA_LROOT "/share" LUA_LUADIR
+-#define LUA_LCDIR	LUA_LROOT "/" LUA_LMULTILIB LUA_LUADIR
++#define LUA_JPATH	";" LUA_JROOT LUA_LJDIR "?.lua"
++#define LUA_LLDIR	LUA_LROOT LUA_LUADIR
++#define LUA_LCDIR	LUA_LROOT LUA_LMULTILIB "/" LUA_LJDIR
+ #define LUA_LLPATH	";" LUA_LLDIR "?.lua;" LUA_LLDIR "?/init.lua"
+ #define LUA_LCPATH1	";" LUA_LCDIR "?.so"
+ #define LUA_LCPATH2	";" LUA_LCDIR "loadall.so"
+diff -uNr LuaJIT-2.0.5.orig/Makefile LuaJIT-2.0.5/Makefile
+--- LuaJIT-2.0.5.orig/Makefile	2019-07-09 11:58:33.619954040 +0900
++++ LuaJIT-2.0.5/Makefile	2019-07-09 12:03:16.953696997 +0900
+@@ -31,15 +31,15 @@
+ DPREFIX= $(DESTDIR)$(PREFIX)
+ INSTALL_BIN=   $(DPREFIX)/bin
+ INSTALL_LIB=   $(DPREFIX)/$(MULTILIB)
+-INSTALL_SHARE= $(DPREFIX)/share
+-INSTALL_INC=   $(DPREFIX)/include/luajit-$(MAJVER).$(MINVER)
++INSTALL_SHARE= $(DPREFIX)/bin
++INSTALL_INC=   $(DPREFIX)/include
+ 
+-INSTALL_LJLIBD= $(INSTALL_SHARE)/luajit-$(VERSION)
+-INSTALL_JITLIB= $(INSTALL_LJLIBD)/jit
++INSTALL_LJLIBD= $(INSTALL_SHARE)/lua
++INSTALL_JITLIB= $(INSTALL_LJLIBD)
+ INSTALL_LMODD= $(INSTALL_SHARE)/lua
+-INSTALL_LMOD= $(INSTALL_LMODD)/$(ABIVER)
+-INSTALL_CMODD= $(INSTALL_LIB)/lua
+-INSTALL_CMOD= $(INSTALL_CMODD)/$(ABIVER)
++INSTALL_LMOD= $(INSTALL_LMODD)/lua
++INSTALL_CMODD= $(INSTALL_LIB)/luajit
++INSTALL_CMOD= $(INSTALL_CMODD)
+ INSTALL_MAN= $(INSTALL_SHARE)/man/man1
+ INSTALL_PKGCONFIG= $(INSTALL_LIB)/pkgconfig
+ 

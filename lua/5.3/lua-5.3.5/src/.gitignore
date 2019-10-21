@@ -1,0 +1,5 @@
+lua
+lua.pc
+luac
+luaconf.h
+luaconf.h.template

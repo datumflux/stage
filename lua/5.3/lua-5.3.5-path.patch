@@ -1,0 +1,30 @@
+diff -uNr lua-5.3.5.orig/src/luaconf.h.template.in lua-5.3.5/src/luaconf.h.template.in
+--- lua-5.3.5.orig/src/luaconf.h.template.in	2019-07-07 18:02:30.109720294 +0900
++++ lua-5.3.5/src/luaconf.h.template.in	2019-07-07 18:02:59.354749053 +0900
+@@ -173,7 +173,7 @@
+ */
+ #define LUA_LDIR	"!\\lua\\"
+ #define LUA_CDIR	"!\\"
+-#define LUA_SHRDIR	"!\\..\\share\\lua\\" LUA_VDIR "\\"
++#define LUA_SHRDIR	"!\\..\\share\\lua\\"
+ #define LUA_PATH_DEFAULT  \
+ 		LUA_LDIR"?.lua;"  LUA_LDIR"?\\init.lua;" \
+ 		LUA_CDIR"?.lua;"  LUA_CDIR"?\\init.lua;" \
+@@ -181,14 +181,14 @@
+ 		".\\?.lua;" ".\\?\\init.lua"
+ #define LUA_CPATH_DEFAULT \
+ 		LUA_CDIR"?.dll;" \
+-		LUA_CDIR"..\\lib\\lua\\" LUA_VDIR "\\?.dll;" \
++		LUA_CDIR"..\\lib\\lua\\?.dll;" \
+ 		LUA_CDIR"loadall.dll;" ".\\?.dll"
+ 
+ #else			/* }{ */
+ 
+ #define LUA_ROOT	"@prefix@/"
+-#define LUA_LDIR	"@pkgdatadir@/lua/" LUA_VDIR "/"
+-#define LUA_CDIR	"@libdir@/lua/" LUA_VDIR "/"
++#define LUA_LDIR	"@pkgdatadir@/lua/"
++#define LUA_CDIR	"@libdir@/lua/"
+ #define LUA_PATH_DEFAULT  \
+ 		LUA_LDIR"?.lua;"  LUA_LDIR"?/init.lua;" \
+ 		LUA_CDIR"?.lua;"  LUA_CDIR"?/init.lua;" \

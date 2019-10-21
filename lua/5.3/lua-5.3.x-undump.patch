@@ -1,0 +1,11 @@
+--- src/lundump.c.orig	2019-06-15 14:51:46.671424628 +0900
++++ src/lundump.c	2019-06-15 14:49:19.256987628 +0900
+@@ -271,7 +271,7 @@
+   setclLvalue(L, L->top, cl);
+   luaD_inctop(L);
+   cl->p = luaF_newproto(L);
+-  LoadFunction(&S, cl->p, NULL);
++  LoadFunction(&S, cl->p, luaS_new(L, S.name));
+   lua_assert(cl->nupvalues == cl->p->sizeupvalues);
+   luai_verifycode(L, buff, cl->p);
+   return cl;
