@@ -52,33 +52,20 @@ add_definitions(
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
-include_directories(${CMAKE_INCLUDE_PATH})
-link_directories(${CMAKE_LIBRARY_PATH})
 #
 #
-set(CMAKE_SHARED_LIBRARY_PREFIX "")
-
-set(LUA_SOURCE_FILES ${SOURCE_FILES} ${BUNDLE_SOURCES} src/lua.cpp)
-set(LUAJIT_SOURCE_FILES ${SOURCE_FILES} ${BUNDLE_SOURCES} src/lua.cpp)
-set(STAGE_SOURCE_FILES ${SOURCE_FILES} ${BUNDLE_SOURCES} main.cpp)
 
 #
 # stage.lua
 if(IS_DIRECTORY "${PROJECT_SOURCE_DIR}/lua/5.3/include")
-    add_library(stage_lua SHARED ${LUA_SOURCE_FILES})
-    set_target_properties(stage_lua PROPERTIES OUTPUT_NAME "lua")
-    target_include_directories(stage_lua PUBLIC lua/5.3/include)
-    target_link_libraries(stage_lua lua-5.3 ${LUA_BUNDLE_LIBRARY})
+    set(CMAKE_INCLUDE_PATH lua/5.3/include ${CMAKE_INCLUDE_PATH})
+elseif(IS_DIRECTORY "${PROJECT_SOURCE_DIR}/lua/jit/include") # stage.luajit
+    set(CMAKE_INCLUDE_PATH lua/jit/include ${CMAKE_INCLUDE_PATH})
 endif()
 
-#
-# stage.luajit
-if(IS_DIRECTORY "${PROJECT_SOURCE_DIR}/lua/jit/include")
-	add_library(stage_luajit SHARED ${LUAJIT_SOURCE_FILES})
-    set_target_properties(stage_luajit PROPERTIES OUTPUT_NAME "luajit")
-	target_include_directories(stage_luajit PUBLIC lua/jit/include)
-	target_link_libraries(stage_luajit luajit-5.1 ${LUAJIT_BUNDLE_LIBRARY})
-endif()
+include_directories(${CMAKE_INCLUDE_PATH})
+link_directories(${CMAKE_LIBRARY_PATH})
+set(STAGE_SOURCE_FILES ${SOURCE_FILES} ${BUNDLE_SOURCES} src/lua.cpp main.cpp)
 
 add_executable(stage ${STAGE_SOURCE_FILES})
 target_link_libraries(stage ${LINK_LIBRARY_FILES})
