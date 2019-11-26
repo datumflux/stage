@@ -311,7 +311,8 @@ struct luaObjectHelper: public luaObjectRef {
             BsonSet &objects, const char *i, const char *id, int idx, RWLOCK_T *rwlock = NULL);
     static int assign(lua_State *L, BsonSet &objects, const char *id, int idx, RWLOCK_T *rwlock = NULL);
 
-    static void destroy(BsonSet &objects) {
+    static void destroy(BsonSet &objects)
+    {
         for (luaObjectHelper::BsonSet::iterator
                 o_it = objects.begin(); o_it != objects.end(); ++o_it)
             o_it->second->Unref();

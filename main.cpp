@@ -6,19 +6,23 @@ static int stage__main(lua_State *L)
     return 0;
 }
 
+LUALIB_API "C" int luaopen_odbc(lua_State *L);
+
 int main(int argc, char *argv[])
 {
     lua__Stage L(NULL);
 
     static struct option long_options[] = {
-            {NULL,      0,                 NULL, 0}
+            {"version", no_argument, NULL, 'v'},
+            {"help"   , no_argument, NULL, 'h'},
+            {NULL,      0, NULL,   0}
     };
 
     int r;
     do {
         int option_index = 0;
 
-        switch (r = getopt_long(argc, argv, "c:l:s:vh?", long_options, &option_index))
+        switch (r = getopt_long(argc, argv, "vh?", long_options, &option_index))
         {
             case -1: break;
             case 'v': _exit(fprintf(stderr, "%s BUILD [%s %s]\n", argv[0], __DATE__, __TIME__));
@@ -31,12 +35,14 @@ int main(int argc, char *argv[])
                         "Usage: %s [OPTION]... [arguments] \n"
                         "\n"
                         "Mandatory arguments to long options are mandatory for short options too.\n"
-                        "      --help                              display this help and exit\n"
-                        "      --version                           output version information and exit\n"
+                        "      --help     display this help and exit\n"
+                        "      --version  output version information and exit\n"
                         "\n", argv[0]);
             } _exit(0);
         }
     } while (r != -1);
+
+    luaopen_odbc(*L);
     {
         const char *arg = argv[0];
 

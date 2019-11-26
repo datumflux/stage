@@ -312,10 +312,10 @@ lua__Stage::GC::~GC() { }
 
 
 /* */
-lua__Stage::lua__Stage(lua_State *L, lua__G *sandbox)
+lua__Stage::lua__Stage(lua_State *l, lua__G *sandbox)
         : lua__G::Proxy(sandbox)
-        , L(L ? L: luaL_newstate())
-        , dispose_(L == NULL)
+        , L(l ? l: luaL_newstate())
+        , dispose_(l == NULL)
 {
     if (dispose_)
     {

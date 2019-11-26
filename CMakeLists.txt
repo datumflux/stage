@@ -15,6 +15,10 @@ set(CMAKE_LIBRARY_PATH
     ${CMAKE_LIBRARY_PATH})
 
 set(LINK_LIBRARY_FILES
+    log4cxx
+    jsoncpp
+    odbc
+    z
     jemalloc
     pthread
     stdc++
@@ -59,8 +63,10 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 # stage.lua
 if(IS_DIRECTORY "${PROJECT_SOURCE_DIR}/lua/5.3/include")
     set(CMAKE_INCLUDE_PATH lua/5.3/include ${CMAKE_INCLUDE_PATH})
+    set(LINK_LIBRARY_FILES lua-5.3 ${LINK_LIBRARY_FILES})
 elseif(IS_DIRECTORY "${PROJECT_SOURCE_DIR}/lua/jit/include") # stage.luajit
     set(CMAKE_INCLUDE_PATH lua/jit/include ${CMAKE_INCLUDE_PATH})
+    set(LINK_LIBRARY_FILES luajit-5.1 ${LINK_LIBRARY_FILES})
 endif()
 
 include_directories(${CMAKE_INCLUDE_PATH})
